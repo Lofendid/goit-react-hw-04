@@ -73,6 +73,7 @@ button:focus-visible {
 
 img {
   display: block;
+  object-fit: cover;
 }
 
 button:hover {
