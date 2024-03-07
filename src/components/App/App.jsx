@@ -12,13 +12,14 @@ import Loader from '../Loader/Loader';
 import ImageModal from '../ImageModal/ImageModal';
 
 function App() {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('cactus');
   const [picData, setPicData] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
   const [modal, setModal] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const [mounted, setMounted] = useState(false);
 
   Modal.setAppElement('#root');
 
@@ -33,7 +34,10 @@ function App() {
   }
 
   useEffect(() => {
-    if (!query) return;
+    if (!mounted) {
+      setMounted(true);
+      return;
+    }
 
     async function fetchData() {
       try {
@@ -58,7 +62,7 @@ function App() {
     }
 
     fetchData();
-  }, [query, page]);
+  }, [query, page, mounted]);
 
   return (
     <div>
