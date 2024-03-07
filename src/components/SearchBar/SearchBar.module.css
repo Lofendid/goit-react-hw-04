@@ -1,0 +1,41 @@
+.form {
+  display: flex;
+  justify-content: center;
+  transform: scale(1.25);
+  padding: 1rem;
+  margin-bottom: 2rem;
+  background-color: rgb(216, 241, 235);
+}
+
+.queryInput {
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border: transparent;
+  color: black;
+}
+
+.queryInput:hover,
+.queryInput:focus {
+  outline: transparent;
+  border: transparent;
+}
+
+.searchBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.7rem;
+  border: transparent;
+  background-color: rgb(25, 4, 45);
+  text-transform: capitalize;
+  transition: background-color 1000ms ease;
+}
+
+.searchBtn:hover,
+.searchBtn:focus {
+  background-color: rgb(51, 167, 140);
+}
+
+.icon {
+  transform: scale(1.25);
+}
