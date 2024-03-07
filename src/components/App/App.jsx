@@ -1,5 +1,3 @@
-import css from './App.module.css';
-
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import toast from 'react-hot-toast';
@@ -67,7 +65,7 @@ function App() {
   }, [query, page, mounted]);
 
   return (
-    <div className={modal ? css.scrollOff : undefined}>
+    <div>
       <ErrorMessage />
 
       {modalData && (
