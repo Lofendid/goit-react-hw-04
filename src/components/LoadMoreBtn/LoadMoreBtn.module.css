@@ -8,6 +8,7 @@
   background-color: rgb(25, 4, 45);
   text-transform: capitalize;
   transition: background-color 1000ms ease;
+  color: white;
 }
 
 .loadBtn:hover,

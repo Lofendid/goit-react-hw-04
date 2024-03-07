@@ -65,7 +65,7 @@ function App() {
   }, [query, page, mounted]);
 
   return (
-    <div>
+    <div style={modal ? { overflowY: 'hidden' } : {}}>
       <ErrorMessage />
 
       {modalData && (
