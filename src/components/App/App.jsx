@@ -1,3 +1,5 @@
+import css from './App.module.css';
+
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import toast from 'react-hot-toast';
@@ -65,7 +67,7 @@ function App() {
   }, [query, page, mounted]);
 
   return (
-    <div>
+    <div className={modal ? css.scrollOff : undefined}>
       <ErrorMessage />
 
       {modalData && (
@@ -74,7 +76,7 @@ function App() {
 
       <SearchBar onSubmit={onSubmit} notify={notify} />
 
-      {picData.lenght !== 0 && (
+      {picData.length !== 0 && (
         <ImageGallery
           picData={picData}
           setModal={setModal}
