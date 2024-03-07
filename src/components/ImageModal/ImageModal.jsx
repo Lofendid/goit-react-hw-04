@@ -6,18 +6,14 @@ import { useEffect } from 'react';
 import ReactModal from 'react-modal';
 
 export default function ImageModal({
-  modal,
-  setModal,
   modalData: { urls, alt_description },
+  closeModal,
+  isModalOpen,
 }) {
-  function handleClose() {
-    setModal(false);
-  }
-
   useEffect(() => {
     function handleKeyDown(e) {
       if (e.key === 'Escape') {
-        setModal(false);
+        closeModal(false);
       }
     }
 
@@ -26,7 +22,7 @@ export default function ImageModal({
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [setModal]);
+  }, [closeModal]);
 
   const custom = {
     content: {
@@ -48,11 +44,11 @@ export default function ImageModal({
     <ReactModal
       style={custom}
       shouldCloseOnOverlayClick={true}
-      onRequestClose={handleClose}
-      isOpen={modal}
+      onRequestClose={closeModal}
+      isOpen={isModalOpen}
     >
       <div className={css.container}>
-        <button onClick={handleClose} className={css.closeBtn}>
+        <button onClick={closeModal} className={css.closeBtn}>
           <HiMiniChevronDown className={css.icon} />
         </button>
         <img className={css.pic} src={urls.regular} alt={alt_description} />

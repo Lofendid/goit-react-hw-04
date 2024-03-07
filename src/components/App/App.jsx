@@ -14,13 +14,15 @@ import ImageModal from '../ImageModal/ImageModal';
 function App() {
   const [query, setQuery] = useState('cactus');
   const [picData, setPicData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [loadMore, setLoadMore] = useState(false);
-  const [modal, setModal] = useState(false);
   const [modalData, setModalData] = useState(null);
-  const [mounted, setMounted] = useState(false);
+
+  const [page, setPage] = useState(1);
   const [error, setError] = useState('');
+
+  const [isLoading, setLoading] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [isMounted, setMounted] = useState(false);
+  const [doLoadMore, setLoadMore] = useState(false);
 
   Modal.setAppElement('#root');
 
@@ -35,7 +37,7 @@ function App() {
   }
 
   useEffect(() => {
-    if (!mounted) {
+    if (!isMounted) {
       setMounted(true);
       return;
     }
@@ -66,7 +68,16 @@ function App() {
     }
 
     fetchData();
-  }, [query, page, mounted]);
+  }, [query, page, isMounted]);
+
+  function openModal(pic) {
+    setModalData(pic);
+    setModalOpen(true);
+  }
+
+  function closeModal() {
+    setModalOpen(false);
+  }
 
   function notify(errMsg) {
     return toast(errMsg);
@@ -86,7 +97,11 @@ function App() {
       />
 
       {modalData && (
-        <ImageModal modal={modal} setModal={setModal} modalData={modalData} />
+        <ImageModal
+          isModalOpen={isModalOpen}
+          closeModal={closeModal}
+          modalData={modalData}
+        />
       )}
 
       <SearchBar onSubmit={onSubmit} notify={notify} />
@@ -94,16 +109,12 @@ function App() {
       {error ? (
         <ErrorMessage msg={error} />
       ) : (
-        <ImageGallery
-          picData={picData}
-          setModal={setModal}
-          setModalData={setModalData}
-        />
+        <ImageGallery picData={picData} openModal={openModal} />
       )}
 
-      {loading && <Loader />}
+      {isLoading && <Loader />}
 
-      {loadMore && <LoadMoreBtn onClick={increasePage} />}
+      {doLoadMore && <LoadMoreBtn onClick={increasePage} />}
     </div>
   );
 }
