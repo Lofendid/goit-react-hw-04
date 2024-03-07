@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
 import fetchGallery from '../../api/gallery-api';
 
@@ -20,6 +20,7 @@ function App() {
   const [modal, setModal] = useState(false);
   const [modalData, setModalData] = useState(null);
   const [mounted, setMounted] = useState(false);
+  const [error, setError] = useState('');
 
   Modal.setAppElement('#root');
 
@@ -27,10 +28,6 @@ function App() {
     setPage(1);
     setPicData([]);
     setQuery(userQuery);
-  }
-
-  function notify(errMsg) {
-    return toast(errMsg);
   }
 
   function increasePage() {
@@ -45,6 +42,7 @@ function App() {
 
     async function fetchData() {
       try {
+        setError('');
         setLoadMore(false);
         setLoading(true);
 
@@ -53,12 +51,14 @@ function App() {
         setPicData(prevData => [...prevData, ...data.results]);
 
         if (data.total_pages === page) {
-          throw new Error('The end of collection had been reached');
+          notify('The end of collection had been reached');
+          setLoadMore(false);
+          return;
         }
 
         setLoadMore(true);
       } catch (err) {
-        notify(err.message);
+        setError(err.message);
         setLoadMore(false);
       } finally {
         setLoading(false);
@@ -68,9 +68,22 @@ function App() {
     fetchData();
   }, [query, page, mounted]);
 
+  function notify(errMsg) {
+    return toast(errMsg);
+  }
+
   return (
     <div>
-      <ErrorMessage />
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          duration: 2000,
+          style: {
+            background: 'red',
+            color: 'white',
+          },
+        }}
+      />
 
       {modalData && (
         <ImageModal modal={modal} setModal={setModal} modalData={modalData} />
@@ -78,7 +91,9 @@ function App() {
 
       <SearchBar onSubmit={onSubmit} notify={notify} />
 
-      {picData.length !== 0 && (
+      {error ? (
+        <ErrorMessage msg={error} />
+      ) : (
         <ImageGallery
           picData={picData}
           setModal={setModal}

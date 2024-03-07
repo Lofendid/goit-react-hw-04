@@ -1,0 +1,7 @@
+.errMsg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(1.25);
+  color: red;
+}

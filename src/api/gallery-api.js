@@ -12,7 +12,7 @@ export default async function fetchGallery(query, page) {
     },
   });
 
-  if (response.data.results.length === 0) {
+  if (response.data.total === 0) {
     throw new Error('No results were found, try another query');
   }
   return response.data;
