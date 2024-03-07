@@ -1,12 +1,8 @@
 import css from './LoadMoreBtn.module.css';
 
-export default function LoadMoreBtn({ setPage }) {
-  function handleClick() {
-    setPage(prevPage => prevPage + 1);
-  }
-
+export default function LoadMoreBtn({ onClick }) {
   return (
-    <button className={css.loadBtn} onClick={handleClick}>
+    <button className={css.loadBtn} onClick={onClick}>
       Load more
     </button>
   );

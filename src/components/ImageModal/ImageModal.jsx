@@ -22,7 +22,10 @@ export default function ImageModal({
     }
 
     document.addEventListener('keydown', handleKeyDown, true);
-    return document.removeEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, [setModal]);
 
   const custom = {

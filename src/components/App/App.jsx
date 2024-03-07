@@ -33,6 +33,10 @@ function App() {
     return toast(errMsg);
   }
 
+  function increasePage() {
+    setPage(prevPage => prevPage + 1);
+  }
+
   useEffect(() => {
     if (!mounted) {
       setMounted(true);
@@ -84,7 +88,7 @@ function App() {
 
       {loading && <Loader />}
 
-      {loadMore && <LoadMoreBtn setPage={setPage} />}
+      {loadMore && <LoadMoreBtn onClick={increasePage} />}
     </div>
   );
 }
